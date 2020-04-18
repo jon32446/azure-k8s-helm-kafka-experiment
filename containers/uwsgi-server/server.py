@@ -1,7 +1,10 @@
 from flask import Flask
 from flask_json import FlaskJSON, as_json
 import datetime
+
+# Create the Flask WSGI application
 app = Flask(__name__)
+# Add Flask-JSON extension to the app
 FlaskJSON(app)
 
 
