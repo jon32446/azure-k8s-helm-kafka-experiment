@@ -26,4 +26,10 @@ double-click "!_SHELL.cmd".
 
 Run flask locally
 
+    cd containers\uwsgi-server
     python server.py
+
+Or run the app through uWSGI, with NGINX as the reverse proxy.
+
+1. Start containers\nginx-alpine\run.cmd
+2. Start containers\uwsgi-server\run.cmd
