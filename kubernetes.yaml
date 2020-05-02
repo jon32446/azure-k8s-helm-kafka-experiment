@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paypaapay
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      paypaapay: backend
+  template:
+    metadata:
+      labels:
+        paypaapay: backend
+    spec:
+      containers:
+        - name: uwsgi-server
+          image: uwsgi-server:latest
+          imagePullPolicy: IfNotPresent  # https://stackoverflow.com/questions/50739405/docker-for-mac-kubernetes-reference-local-image
+        - name: nginx-alpine
+          image: nginx-alpine:latest
+          imagePullPolicy: IfNotPresent  # Default is IfNotPresent, but :latest tag forces a pull, which fails because the image is not published anywhere
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: paypaapay-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    paypaapay: backend
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30001
