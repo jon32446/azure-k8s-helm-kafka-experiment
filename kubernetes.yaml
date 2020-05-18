@@ -1,4 +1,19 @@
-apiVersion: apps/v1
+# Create the service before the pods so that they get distributed across nodes by the scheduler.
+apiVersion: v1
+kind: Service
+metadata:
+  name: paypaapay-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    paypaapay: backend
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30001
+---
+apiVersion: v1
 kind: Deployment
 metadata:
   name: paypaapay
@@ -20,17 +35,3 @@ spec:
         - name: nginx-alpine
           image: nginx-alpine:latest
           imagePullPolicy: IfNotPresent  # Default is IfNotPresent, but :latest tag forces a pull, which fails because the image is not published anywhere
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: paypaapay-entrypoint
-  namespace: default
-spec:
-  type: NodePort
-  selector:
-    paypaapay: backend
-  ports:
-  - port: 80
-    targetPort: 80
-    nodePort: 30001
