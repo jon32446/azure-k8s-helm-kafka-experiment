@@ -9,11 +9,11 @@ spec:
   selector:
     paypaapay: backend
   ports:
-  - port: 80
-    targetPort: 80
-    nodePort: 30001
+    - port: 80
+      targetPort: 80
+      nodePort: 30001
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: paypaapay
@@ -31,7 +31,7 @@ spec:
       containers:
         - name: uwsgi-server
           image: uwsgi-server:latest
-          imagePullPolicy: IfNotPresent  # https://stackoverflow.com/questions/50739405/docker-for-mac-kubernetes-reference-local-image
+          imagePullPolicy: IfNotPresent # https://stackoverflow.com/questions/50739405/docker-for-mac-kubernetes-reference-local-image
         - name: nginx-alpine
           image: nginx-alpine:latest
-          imagePullPolicy: IfNotPresent  # Default is IfNotPresent, but :latest tag forces a pull, which fails because the image is not published anywhere
+          imagePullPolicy: IfNotPresent # Default is IfNotPresent, but :latest tag forces a pull, which fails because the image is not published anywhere
