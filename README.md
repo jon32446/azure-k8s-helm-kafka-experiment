@@ -29,7 +29,18 @@ Run flask locally
     cd containers\uwsgi-server
     python server.py
 
-Or run the app through uWSGI, with NGINX as the reverse proxy.
+Or run the app using Kubernetes, with uWSGI as the app server and NGINX as the reverse proxy.
 
-1. Start containers\nginx-alpine\run.cmd
-2. Start containers\uwsgi-server\run.cmd
+    kubectl apply -f kubernetes.yaml
+
+# Smoke Testing
+
+Run one of the following curl commands (Kubernetes):
+
+    curl localhost:30001
+    curl localhost:30001/time
+
+Run one of the following curl commands (Flask dev):
+
+    curl localhost:5000
+    curl localhost:5000/time
