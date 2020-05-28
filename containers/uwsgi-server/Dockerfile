@@ -17,6 +17,17 @@ WORKDIR /app
 # Expose application server
 EXPOSE 3031
 
+# change to a non-privileged user
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "$(pwd)" \
+    --no-create-home \
+    --uid "16132" \
+    "appuser"
+
+USER appuser
+
 CMD ["uwsgi", \
     "--plugins", "python3", \
     "--socket", "0.0.0.0:3031", \
