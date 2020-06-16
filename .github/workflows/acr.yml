@@ -26,7 +26,7 @@ jobs:
     - name: Build the image and save to the container registry
       run:
         az acr build
-        --registry ${{ secrets.registry }}
+        --registry ${{ secrets.container_registry }}
         --file Dockerfile
         --image ${{ secrets.acr_repository }}/nginx-alpine:latest
         ./containers/nginx-alpine
