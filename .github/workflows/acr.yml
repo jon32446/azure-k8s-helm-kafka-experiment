@@ -1,0 +1,32 @@
+name: ACR  # Azure Container Registry
+
+# Trigger workflow on push to master in containers folder
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "containers/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Get those containers into ACR
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Log into Azure
+      run:
+        az login --service-principal
+        --username ${{ secrets.service_principal }}
+        --password ${{ secrets.service_principal_password }}
+        --tenant ${{ secrets.tenant }}
+
+    - name: Build the image and save to the container registry
+      run:
+        az acr build
+        --registry ${{ secrets.registry }}
+        --file Dockerfile
+        --image ${{ secrets.acr_repository }}/nginx-alpine:latest
+        ./containers/nginx-alpine
