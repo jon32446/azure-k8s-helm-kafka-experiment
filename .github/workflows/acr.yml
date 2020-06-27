@@ -23,9 +23,9 @@ jobs:
           --tenant ${{ secrets.tenant }}
 
       - name: Build the image and save to the container registry
-        run: az acr build
+        run: cd ./containers/nginx-alpine &&
+          az acr build
           --resource-group ppap-rg
           --registry ppapcr
           --file Dockerfile
-          --image ppapcr/nginx-alpine:latest
-          ./containers/nginx-alpine
+          --image ppapcr/nginx-alpine:latest .
