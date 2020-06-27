@@ -38,6 +38,7 @@ SP_APP_ID=$(az ad sp show --id http://$SERVICE_PRINCIPAL_NAME --query appId --ou
 
 az role assignment create --role AcrPush   --assignee $SP_APP_ID --scope $ACR_REGISTRY_ID
 az role assignment create --role AcrDelete --assignee $SP_APP_ID --scope $ACR_REGISTRY_ID
+az role assignment create --role Reader    --assignee $SP_APP_ID --scope $ACR_REGISTRY_ID
 
 # Output the service principal's credentials; use these in your services and
 # applications to authenticate to the container registry.
