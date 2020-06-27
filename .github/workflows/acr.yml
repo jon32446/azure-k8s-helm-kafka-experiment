@@ -1,4 +1,4 @@
-name: ACR  # Azure Container Registry
+name: ACR # Azure Container Registry
 
 # Trigger workflow on push to master in containers folder
 on:
@@ -14,19 +14,18 @@ jobs:
 
     # Get those containers into ACR
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Log into Azure
-      run:
-        az login --service-principal
-        --username ${{ secrets.service_principal }}
-        --password ${{ secrets.service_principal_password }}
-        --tenant ${{ secrets.tenant }}
+      - name: Log into Azure
+        run: az login --service-principal
+          --username ${{ secrets.service_principal }}
+          --password ${{ secrets.service_principal_password }}
+          --tenant ${{ secrets.tenant }}
 
-    - name: Build the image and save to the container registry
-      run:
-        az acr build
-        --registry ${{ secrets.container_registry }}
-        --file Dockerfile
-        --image ${{ secrets.acr_repository }}/nginx-alpine:latest
-        ./containers/nginx-alpine
+      - name: Build the image and save to the container registry
+        run: az acr build
+          --resource-group ppap-rg
+          --registry ppapcr
+          --file Dockerfile
+          --image ppapcr/nginx-alpine:latest
+          ./containers/nginx-alpine
