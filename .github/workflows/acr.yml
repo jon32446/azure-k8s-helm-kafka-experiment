@@ -31,7 +31,7 @@ jobs:
           --image ppapcr/nginx-alpine:latest .
 
       - name: Build the Flask image and save it to the container registry
-        run: cd ../../containers/uwsgi-server &&
+        run: cd ./containers/uwsgi-server &&
           az acr build
           --resource-group ppap-rg
           --registry ppapcr
