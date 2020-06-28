@@ -28,7 +28,7 @@ jobs:
           --resource-group ppap-rg
           --registry ppapcr
           --file Dockerfile
-          --image ppapcr/nginx-alpine:latest .
+          --image ppapcr/nginx-alpine:v1 .
 
       - name: Build the Flask image and save it to the container registry
         run: cd ./containers/uwsgi-server &&
@@ -36,4 +36,4 @@ jobs:
           --resource-group ppap-rg
           --registry ppapcr
           --file Dockerfile
-          --image ppapcr/uwsgi-server:latest .
+          --image ppapcr/uwsgi-server:v1 .
