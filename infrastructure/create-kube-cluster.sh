@@ -80,3 +80,10 @@ az aks get-credentials \
 
 # Confirm node is available
 kubectl get nodes
+
+#----------------------------------------------------------------------------
+# Grant the Kube cluster access to the Azure VNet
+#----------------------------------------------------------------------------
+AKS_SERVICE_PRINCIPAL_ID=$(az aks list --query "[?name=='ppap-kube'].servicePrincipalProfile.clientId" -o tsv)
+
+az role assignment create --role "Network Contributor" --assignee $AKS_SERVICE_PRINCIPAL_ID --scope $SUBNET_ID
