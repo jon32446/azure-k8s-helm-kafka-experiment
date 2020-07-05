@@ -87,3 +87,15 @@ kubectl get nodes
 AKS_SERVICE_PRINCIPAL_ID=$(az aks list --query "[?name=='$AKS_CLUSTER_NAME'].servicePrincipalProfile.clientId" -o tsv)
 
 az role assignment create --role "Network Contributor" --assignee $AKS_SERVICE_PRINCIPAL_ID --scope $SUBNET_ID
+
+#----------------------------------------------------------------------------
+# Create a service principal for Azure/aks-set-context in GitHub actions
+#----------------------------------------------------------------------------
+AKS_ID=$(az aks show --name $AKS_CLUSTER_NAME --resource-group $RESOURCE_GROUP --query id -o tsv)
+az ad sp create-for-rbac \
+    --name "$AKS_CLUSTER_NAME-github" \
+    --role contributor \
+    --scopes $AKS_ID \
+    --sdk-auth
+
+echo "Save the above JSON object as a GitHub secret named AZURE_CREDENTIALS for Kubernetes auth"
