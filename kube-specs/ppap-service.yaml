@@ -6,7 +6,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    paypaapay: backend
+    ppap: backend
   ports:
     - port: 80
       targetPort: 80

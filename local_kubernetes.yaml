@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: paypaapay-entrypoint
+  name: ppap-entrypoint
   namespace: default
 spec:
   type: NodePort
   selector:
-    paypaapay: backend
+    ppap: backend
   ports:
     - port: 80
       targetPort: 80
@@ -16,17 +16,17 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: paypaapay
+  name: ppap
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      paypaapay: backend
+      ppap: backend
   template:
     metadata:
       labels:
-        paypaapay: backend
+        ppap: backend
     spec:
       containers:
         - name: uwsgi-server
