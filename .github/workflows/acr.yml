@@ -28,7 +28,7 @@ jobs:
           --resource-group ppap-rg
           --registry ppapcr
           --file Dockerfile
-          --image ppapcr/nginx-alpine:v1 .
+          --image ppapcr/nginx-alpine:${{ github.sha }} .
 
       - name: Build the Flask image and save it to the container registry
         run: cd ./containers/uwsgi-server &&
@@ -36,4 +36,20 @@ jobs:
           --resource-group ppap-rg
           --registry ppapcr
           --file Dockerfile
-          --image ppapcr/uwsgi-server:v1 .
+          --image ppapcr/uwsgi-server:${{ github.sha }} .
+
+      # Set the target AKS cluster.
+      - uses: Azure/aks-set-context@v1
+        with:
+          creds: "${{ secrets.AZURE_CREDENTIALS }}"
+          cluster-name: ppap-kube
+          resource-group: ppap-rg
+
+      - uses: Azure/k8s-deploy@v1
+        with:
+          manifests: |
+            kube-specs/ppap-deployment.yml
+            kube-specs/ppap-service.yml
+          images: |
+            ppapcr.azurecr.io/ppapcr/uwsgi-server:${{ github.sha }}
+            ppapcr.azurecr.io/ppapcr/nginx-alpine:${{ github.sha }}
