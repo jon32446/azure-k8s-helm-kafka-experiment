@@ -4,7 +4,7 @@ metadata:
   name: ppap-svc
   namespace: default
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     ppap: backend
   ports:
