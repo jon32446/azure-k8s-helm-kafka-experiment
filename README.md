@@ -44,3 +44,17 @@ Run one of the following curl commands (Flask dev):
 
     curl localhost:5000
     curl localhost:5000/time
+
+# Load Testing
+
+Create another virtual environment for the locust test and install requirements. Then run:
+
+    cd load-test
+    python -m locust
+
+The web interface will spin up and is locally accessible at http://localhost:8089
+
+Monitor the horizontal pod autoscaler and the nodes with the following:
+
+    kubectl get hpa -w
+    kubectl get nodes -w
