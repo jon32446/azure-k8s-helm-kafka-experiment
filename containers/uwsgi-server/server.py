@@ -10,7 +10,7 @@ FlaskJSON(app)
 
 @app.route('/')
 def get_root():
-    return "Try /time"
+    return "Try /time\n"
 
 
 @app.route('/time')
