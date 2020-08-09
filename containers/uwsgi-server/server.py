@@ -31,7 +31,7 @@ def post_pay():
         message = {key: request.form[key] for key in [
             "from_account", "to_account", "amount"
         ]}
-        message["timestamp"] = datetime.datetime.utcnow()
+        message["timestamp"] = datetime.datetime.utcnow().isoformat()
 
         # Publish payment message to Kafka
         producer = KafkaProducer(
