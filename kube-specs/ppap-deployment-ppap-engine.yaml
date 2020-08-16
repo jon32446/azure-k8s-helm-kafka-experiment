@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ppap-engine
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      ppap: engine
+  template:
+    metadata:
+      labels:
+        ppap: engine
+    spec:
+      containers:
+        - name: payment-stream-processor
+          image: ppapcr.azurecr.io/ppapcr/payment-stream-processor:v1
+          resources:
+            requests: # minimum resources required
+              cpu: 100m
+              memory: 32Mi
+            limits: # maximum resources allocated
+              cpu: 500m
+              memory: 128Mi
+          volumeMounts:
+            - name: secretvolume
+              mountPath: "/etc/ppap-secret"
+      volumes:
+        - name: secretvolume
+          secret:
+            secretName: ppaptablestorage-connection-string

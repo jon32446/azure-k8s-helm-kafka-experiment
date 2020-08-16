@@ -38,6 +38,14 @@ jobs:
           --file Dockerfile
           --image ppapcr/uwsgi-server:${{ github.sha }} .
 
+      - name: Build the Payment Stream Processor image and save it to the container registry
+        run: cd ./containers/payment-stream-processor &&
+          az acr build
+          --resource-group ppap-rg
+          --registry ppapcr
+          --file Dockerfile
+          --image ppapcr/payment-stream-processor:${{ github.sha }} .
+
       # Set the target AKS cluster.
       - uses: Azure/aks-set-context@v1
         with:
@@ -49,7 +57,9 @@ jobs:
         with:
           manifests: |
             kube-specs/ppap-deployment.yaml
+            kube-specs/ppap-deployment-ppap-engine.yaml
             kube-specs/ppap-service.yaml
           images: |
             ppapcr.azurecr.io/ppapcr/uwsgi-server:${{ github.sha }}
             ppapcr.azurecr.io/ppapcr/nginx-alpine:${{ github.sha }}
+            ppapcr.azurecr.io/ppapcr/payment-stream-processor:${{ github.sha }}
