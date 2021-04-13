@@ -1,5 +1,5 @@
 # paypineapple-applepay
-Paypineapple-applepay is the future of payments
+Learning project for Azure Kubernetes Service, Helm, Kafka and Azure Table Storage. Load testing with Locust. 
 
 # Setup
 
@@ -21,7 +21,7 @@ Install the requirements in requirements.txt
 
 # Running
 
-Open a command prompt with the virtual environment activated. Shortcut to do this is just
+Open a command prompt with the virtual environment activated. Shortcut to do this is to just
 double-click "!_SHELL.cmd".
 
 Run flask locally
